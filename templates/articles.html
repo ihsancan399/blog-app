@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+    #myhr{
+        border-radius: 5px;
+        border: 10px solid rgb(7, 115, 158);
+        margin-left: -100px;
+        margin-right: -100px;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-10 offset-md-3">
+        <div class="col-lg-8">
+            <form class="form-inline my-2 my-lg-0">
+                {% csrf_token %}
+                <input type="text" name="keyword" class="form-control mr-sm-2" maxlength="64" placeholder="Ara..">
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Ara</button>
+            </form>
+        </div>
+    </div>
+</div>
+  <h1>Makaleler</h1>
+  <hr>
+  {% if articles %}
+    {% for article in articles %}
+    <div class="row">
+        <div class="col-lg-8">
+             <a href="{% url 'article:detail' article.id %}"><h2 class="mt-4">{{article.title}}</h2></a>
+             <p class="lead">
+             by {{article.author.username}}
+             </p>
+             <hr>
+             <p>{{article.created_at}}</p>
+             <hr>
+             {% if article.article_img %}
+            <a href="/article/article/{{article.id}}">
+                <img class="img-fluid rounded" src="{{article.article_img.url}}" alt="">
+            </a>
+             {% endif %}
+             <p class="lead">
+             {{article.content|safe}}
+             </p>
+             <hr>
+             <br><br><br>
+        </div>
+    </div>
+    <hr id="myhr">
+    {% endfor %}
+  {% else %}
+  <div class="alert alert-danger">
+      <strong>Makale Bulunamadı</strong>
+  </div>
+  {% endif %}
+{% endblock body %}

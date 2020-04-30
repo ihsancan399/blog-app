@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>Hesap Bilgileri</h1>
+  <hr>
+  <h5>Kullanıcı Adı: {{user}}</h5>
+  <h5>İsim : {{user.first_name}}</h5>
+  <h5>Soyisim : {{user.last_name}}</h5>
+  <h5>Email : {{user.email}}</h5>
+  <hr>
+  <br><br><br>
+  <h1>Makalelerim</h1>
+  {% for article in articles  %}
+    {% if article %}
+      <hr>
+      <h2>{{article.title}}</h2>
+      {% if article.article_img %}
+        <img class="img-fluid rounded" src="{{article.article_img.url}}" alt="">
+      {% endif %}
+      <p>{{article.content|safe}}</p>
+    {% else %}
+      <div class="alert alert-danger">
+          Hiçbir Makaleniz Yok!
+      </div>
+    {% endif %}
+    
+    
+  {% endfor %}
+{% endblock body %}
